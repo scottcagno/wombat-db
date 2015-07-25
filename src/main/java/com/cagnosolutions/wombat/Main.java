@@ -33,25 +33,25 @@ public class Main {
 		db.set("user:1:email", "scottiecagno@gmail.com");
 		db.set("user:1:age", "28");
 
-		String val = db.get("user:1:name");
-		System.out.printf("value: %s\n", val);
+		Object v0 = db.get("user:1:name");
+		System.out.printf("value: %s\n", v0);
 
 		db.use(1);
 		db.set("foo", "bar");
-		String val2 = db.get("foo");
-		System.out.printf("value2: %s\n", val2);
+		Object v1 = db.get("foo");
+		System.out.printf("value2: %s\n", v1);
 
 		db.use(0);
-		String val3 = db.get("user:1:email");
-		System.out.printf("value3: %s\n", val3);
+		Object v2 = db.get("user:1:email");
+		System.out.printf("value3: %s\n", v2);
 
-		String val4 = db.get("user:1:age");
-		System.out.printf("value4: %s\n", val4);
+		Object v3 = db.get("user:1:age");
+		System.out.printf("value4: %s\n", v3);
 
 		db.del("user:1:age");
 
-		String val5 = db.get("user:1:age");
-		System.out.printf("value5: %s\n", val5);
+		Object v4 = db.get("user:1:age");
+		System.out.printf("value5: %s\n", v4);
 	}
 
 }

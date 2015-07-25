@@ -1,7 +1,9 @@
 package com.cagnosolutions.wombat.db;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Scott Cagno.
@@ -29,11 +31,32 @@ public final class Database {
 		return stores.get(STORE).set(k, v);
 	}
 
-	public String get(String k) {
+	public Object get(String k) {
 		return stores.get(STORE).get(k);
 	}
 
 	public String del(String k) {
 		return stores.get(STORE).del(k);
 	}
+
+	public String hset(String k, String f, Object v) {
+		return stores.get(STORE).hset(k, f, v);
+	}
+
+	public Object hget(String k, String f) {
+		return stores.get(STORE).hget(k, f);
+	}
+
+	public String hdel(String k, String f) {
+		return stores.get(STORE).hdel(k, f);
+	}
+
+	public Set hkeys(String k) {
+		return stores.get(STORE).hkeys(k);
+	}
+
+	public Collection hvals(String k) {
+		return stores.get(STORE).hvals(k);
+	}
+
 }
