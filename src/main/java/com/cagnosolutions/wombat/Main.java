@@ -1,6 +1,7 @@
 package com.cagnosolutions.wombat;
 
 import com.cagnosolutions.wombat.db.Database;
+import com.cagnosolutions.wombat.db.Hash;
 
 /**
  * Created by Scott Cagno.
@@ -29,29 +30,28 @@ public class Main {
 		 */
 
 		Database db = new Database();
-		db.set("user:1:name", "Scott Cagno");
-		db.set("user:1:email", "scottiecagno@gmail.com");
-		db.set("user:1:age", "28");
+		db.set("user:1", "name", 	"Scott Cagno");
+		db.set("user:1", "fname", 	"Scott");
+		db.set("user:1", "lname", 	"Cagno");
+		db.set("user:1", "email", 	"scottiecagno@gmail.com");
+		db.set("user:1", "age", "28");
+		db.set("user:1", "active", "true");
 
-		Object v0 = db.get("user:1:name");
-		System.out.printf("value: %s\n", v0);
+		Hash hash1 = db.get("user:1");
+		System.out.printf("hash1: %s\n", hash1);
 
-		db.use(1);
-		db.set("foo", "bar");
-		Object v1 = db.get("foo");
-		System.out.printf("value2: %s\n", v1);
+		String name1 = db.get("user:1", "name");
+		String email1 = db.get("user:1", "email");
+		System.out.printf("name: %s, email: %s\n", name1, email1);
 
-		db.use(0);
-		Object v2 = db.get("user:1:email");
-		System.out.printf("value3: %s\n", v2);
+		db.del("user:1", "email");
+		hash1 = db.get("user:1");
+		System.out.printf("hash1: %s\n", hash1);
 
-		Object v3 = db.get("user:1:age");
-		System.out.printf("value4: %s\n", v3);
+		db.del("user:1");
+		hash1 = db.get("user:1");
+		System.out.printf("hash1: %s\n", hash1);
 
-		db.del("user:1:age");
-
-		Object v4 = db.get("user:1:age");
-		System.out.printf("value5: %s\n", v4);
 	}
 
 }

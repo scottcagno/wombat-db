@@ -1,9 +1,7 @@
 package com.cagnosolutions.wombat.db;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by Scott Cagno.
@@ -12,51 +10,29 @@ import java.util.Set;
 
 public final class Database {
 
-	private final List<Store> stores = new ArrayList<>();
-	private int STORE = 0;
+	private final ConcurrentMap<String, Hash> hashsets = new ConcurrentHashMap<>(8, 0.85f, 2);
 
-	public Database() {
-		this.stores.add(new Store());
+	public void set(String k, String f, String v) {
+		hashsets.compute(k, (key, hash) -> (hash == null) ? new Hash(f, v) : hash.set(f, v));
 	}
 
-	public int use(int store) {
-		if(stores.size() >= store) {
-			this.STORE = store;
-			stores.add(new Store());
-		}
-		return this.STORE;
+	public Hash get(String k) {
+		return hashsets.compute(k, (key, hash) -> (hash == null) ? null : hash);
 	}
 
-	public String set(String k, String v) {
-		return stores.get(STORE).set(k, v);
+	public String get(String k, String f) {
+		Hash hash = this.get(k);
+		return (hash == null) ? null : hash.get(f);
 	}
 
-	public Object get(String k) {
-		return stores.get(STORE).get(k);
+	public void del(String k) {
+		if(hashsets.containsKey(k))
+			hashsets.remove(k);
 	}
 
-	public String del(String k) {
-		return stores.get(STORE).del(k);
+	public void del(String k, String f) {
+		Hash hash = this.get(k);
+		if(hash != null)
+			hash.del(f);
 	}
-
-	public String hset(String k, String f, Object v) {
-		return stores.get(STORE).hset(k, f, v);
-	}
-
-	public Object hget(String k, String f) {
-		return stores.get(STORE).hget(k, f);
-	}
-
-	public String hdel(String k, String f) {
-		return stores.get(STORE).hdel(k, f);
-	}
-
-	public Set hkeys(String k) {
-		return stores.get(STORE).hkeys(k);
-	}
-
-	public Collection hvals(String k) {
-		return stores.get(STORE).hvals(k);
-	}
-
 }
