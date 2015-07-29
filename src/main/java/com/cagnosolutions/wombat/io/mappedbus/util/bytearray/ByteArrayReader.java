@@ -18,15 +18,16 @@ public class ByteArrayReader {
 
 	public void run() {
 		try {
-			MappedBusReader reader = new MappedBusReader("/tmp/test-bytearray", 2000000L, 10);
+			MappedBusReader reader = new MappedBusReader("/tmp/test-data", 2000000L, 30);
 			reader.open();
 
-			byte[] buffer = new byte[10];
+			byte[] buffer = new byte[30];
 
 			while (true) {
 				if (reader.next()) {
 					int length = reader.readBuffer(buffer, 0);
 					System.out.println("Read: length = " + length + ", data= "+ Arrays.toString(buffer));
+					System.out.printf("data -> %s\n", new String(buffer));
 				}
 			}
 		} catch(Exception e) {
