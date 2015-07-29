@@ -48,7 +48,6 @@ public class Document implements MappedBusMessage {
 
 	public void read(MemoryMappedFile mem, long pos) {
 		size = mem.getInt(pos);
-		System.out.printf("size: %d (%d)\n", size, size*1024);
 		id = new byte[36];
 		mem.getBytes(pos + 4, id, 0, 36);
 		modified = new byte[36];
